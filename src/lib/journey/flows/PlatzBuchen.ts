@@ -1,7 +1,7 @@
 /**
  * usePlatzBuchenFlow — the plumbing of the flow « Platz buchen », generated from the plan.
  *
- * Writes `platzbuchungen`: asks `mitglied`, `platz`, `platzart`, `beginn`, `ende`, `buchungsart`, `bemerkung`.
+ * Writes `platzbuchungen`: asks `ende`, `platz`, `beginn`, `mitglied`, `platzart`, `bemerkung`, `buchungsart`.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
  * the plan), and the submit plan with its fixed and derived values. A page
@@ -16,17 +16,17 @@
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = usePlatzBuchenFlow({
- *     steps: { mitglied: 1, platz: 2, platzart: 2, beginn: 2, ende: 2, buchungsart: 2, bemerkung: 2 },
+ *     steps: { mitglied: 1, ende: 2, platz: 2, beginn: 2, platzart: 2, bemerkung: 2, buchungsart: 2 },
  *     items: { mitglied: r => ({ id: r.id, title: fieldText(r, 'vorname') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.mitglied.select} {...flow.pick('mitglied')} />
- *     <Bound form={flow.forms.platzbuchungen} name="platz" />
- *     <Bound form={flow.forms.platzbuchungen} name="platzart" />
- *     <Bound form={flow.forms.platzbuchungen} name="beginn" />
  *     <Bound form={flow.forms.platzbuchungen} name="ende" />
- *     <Bound form={flow.forms.platzbuchungen} name="buchungsart" />
+ *     <Bound form={flow.forms.platzbuchungen} name="platz" />
+ *     <Bound form={flow.forms.platzbuchungen} name="beginn" />
+ *     <Bound form={flow.forms.platzbuchungen} name="platzart" />
  *     <Bound form={flow.forms.platzbuchungen} name="bemerkung" />
+ *     <Bound form={flow.forms.platzbuchungen} name="buchungsart" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -92,10 +92,10 @@ function hasValues(form: StepForm): boolean {
 export function usePlatzBuchenFlow(options: PlatzBuchenFlowOptions = {}) {
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const platzbuchungen = useStepForm('platzbuchungen', {
-    fields: ["mitglied", "platz", "platzart", "beginn", "ende", "buchungsart", "bemerkung"],
-    steps: only(steps, ["mitglied", "platz", "platzart", "beginn", "ende", "buchungsart", "bemerkung"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["mitglied", "platz", "platzart", "beginn", "ende", "buchungsart", "bemerkung"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["mitglied", "platz", "platzart", "beginn", "ende", "buchungsart", "bemerkung"]),
+    fields: ["ende", "platz", "beginn", "mitglied", "platzart", "bemerkung", "buchungsart"],
+    steps: only(steps, ["ende", "platz", "beginn", "mitglied", "platzart", "bemerkung", "buchungsart"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["ende", "platz", "beginn", "mitglied", "platzart", "bemerkung", "buchungsart"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["ende", "platz", "beginn", "mitglied", "platzart", "bemerkung", "buchungsart"]),
   });
   const forms: PlatzBuchenForms = { platzbuchungen };
   const formList: StepForm[] = [platzbuchungen];

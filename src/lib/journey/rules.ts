@@ -22,7 +22,7 @@ export interface StringFields {
   "trainingsgruppen": "gruppenname" | "beginn" | "ende" | "bemerkung";
   "mitglieder": "vorname" | "nachname" | "email" | "telefon";
   "turniere": "turniername" | "altersklasse" | "austragungsort" | "beschreibung";
-  "turnieranmeldungen": "verein" | "wettbewerb_wunsch" | "anmerkung" | "teilnehmer_vorname" | "teilnehmer_nachname" | "teilnehmer_email" | "telefon";
+  "turnieranmeldungen": "verein" | "wettbewerb_wunsch" | "anmerkung" | "teilnehmer_vorname" | "teilnehmer_nachname" | "teilnehmer_email" | "telefon" | "leistungsklasse";
   "platzbuchungen": "bemerkung";
 }
 export type StringFieldKey<E extends EntityKey> = E extends keyof StringFields ? StringFields[E] : never;
@@ -195,6 +195,14 @@ export const FIELD_RULES: Record<EntityKey, Record<string, FieldRule>> = {
     }
   },
   "trainingsgruppen": {
+    "max_teilnehmer": {
+      "key": "max_teilnehmer",
+      "fulltype": "number",
+      "kind": "number",
+      "required": false,
+      "label": "Maximale Teilnehmerzahl",
+      "writable": true
+    },
     "gruppenname": {
       "key": "gruppenname",
       "fulltype": "string/text",
@@ -322,9 +330,9 @@ export const FIELD_RULES: Record<EntityKey, Record<string, FieldRule>> = {
       "label": "Beitragsart",
       "writable": true,
       "options": [
+        "erwachsener",
         "jugendlicher",
-        "familie",
-        "erwachsener"
+        "familie"
       ]
     },
     "trainingsgruppe": {
@@ -523,6 +531,15 @@ export const FIELD_RULES: Record<EntityKey, Record<string, FieldRule>> = {
       "label": "Telefon",
       "writable": true,
       "autoComplete": "tel"
+    },
+    "leistungsklasse": {
+      "key": "leistungsklasse",
+      "fulltype": "string/text",
+      "kind": "text",
+      "required": false,
+      "label": "Leistungsklasse (LK)",
+      "writable": true,
+      "maxLength": 4000
     }
   },
   "platzbuchungen": {

@@ -29,10 +29,10 @@ import { labelOf, type EntityKey } from './rules';
 /** The writable fields of each entity — the keys a message may address (generated). */
 export interface MessageFields {
   "trainer": "vorname" | "nachname" | "email" | "telefon" | "trainerlizenz";
-  "trainingsgruppen": "gruppenname" | "trainer" | "wochentag" | "beginn" | "ende" | "bemerkung";
+  "trainingsgruppen": "max_teilnehmer" | "gruppenname" | "trainer" | "wochentag" | "beginn" | "ende" | "bemerkung";
   "mitglieder": "vorname" | "nachname" | "email" | "telefon" | "geburtsdatum" | "mitglied_seit" | "beitragsart" | "trainingsgruppe";
   "turniere": "turniername" | "turnierbeginn" | "turnierende" | "meldeschluss" | "wettbewerb" | "altersklasse" | "austragungsort" | "startgeld" | "beschreibung";
-  "turnieranmeldungen": "einwilligung" | "teilnehmer_geburtsdatum" | "vereinsmitglied" | "verein" | "wettbewerb_wunsch" | "anmerkung" | "turnier" | "teilnehmer_vorname" | "teilnehmer_nachname" | "teilnehmer_email" | "telefon";
+  "turnieranmeldungen": "einwilligung" | "teilnehmer_geburtsdatum" | "vereinsmitglied" | "verein" | "wettbewerb_wunsch" | "anmerkung" | "turnier" | "teilnehmer_vorname" | "teilnehmer_nachname" | "teilnehmer_email" | "telefon" | "leistungsklasse";
   "platzbuchungen": "mitglied" | "platz" | "platzart" | "beginn" | "ende" | "buchungsart" | "bemerkung";
 }
 export type MessageFieldKey<E extends EntityKey> = E extends keyof MessageFields ? MessageFields[E] : never;

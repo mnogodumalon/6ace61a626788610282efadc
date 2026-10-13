@@ -14,7 +14,7 @@ index.css is pre-generated with the shared design system. Do NOT edit it.
 src/config/ai-features.ts is editable — set AI_PHOTO_SCAN['Entity'] = true to enable photo scan in dialogs.
 NEVER use Bash cat/echo/heredoc for file operations — always use Read/Write/Edit tools.
 
-Generated 165 scaffold files:
+Generated 157 scaffold files:
   - src/App.tsx
   - src/i18n/index.ts
   - src/i18n/common.ts
@@ -24,7 +24,6 @@ Generated 165 scaffold files:
   - src/types/la-widgets.d.ts
   - src/components/PageShell.tsx
   - src/components/ActionsSidebar.tsx
-  - src/pages/DashboardOverview.tsx
   - src/pages/DashboardReady.tsx
   - src/components/DashboardStates.tsx
   - src/components/ConfirmDialog.tsx
@@ -54,12 +53,6 @@ Generated 165 scaffold files:
   - src/components/DatePicker.tsx
   - .placeholder-tasks.json
   - src/config/form-enhancements/types.ts
-  - src/config/form-enhancements/Trainer.ts
-  - src/config/form-enhancements/Trainingsgruppen.ts
-  - src/config/form-enhancements/Mitglieder.ts
-  - src/config/form-enhancements/Turniere.ts
-  - src/config/form-enhancements/Turnieranmeldungen.ts
-  - src/config/form-enhancements/Platzbuchungen.ts
   - scripts/parse-formulas.mjs
   - scripts/apply-placeholders.mjs
   - src/config/intents.ts
@@ -122,7 +115,6 @@ Generated 165 scaffold files:
   - src/lib/ai.ts
   - src/components/VersionCheck.tsx
   - src/components/AttachmentsSection.tsx
-  - src/config/ai-features.ts
   - src/lib/formatters.ts
   - src/lib/polish.ts
   - src/hooks/useDashboardData.ts
@@ -329,7 +321,7 @@ contracts; Read one only if the contract below is insufficient.
  * Overlay content per entity (the host renders these — you never compose
  * Details blocks yourself):
  *   trainer: vorname, nachname, email, telefon, trainerlizenz  ·  ← trainingsgruppen (list + contextual +)
- *   trainingsgruppen: gruppenname, trainer, wochentag, beginn, ende, bemerkung  ·  → trainer · ← mitglieder (list + contextual +)
+ *   trainingsgruppen: max_teilnehmer, gruppenname, trainer, wochentag, beginn, ende, bemerkung  ·  → trainer · ← mitglieder (list + contextual +)
  *   mitglieder: vorname, nachname, email, telefon, geburtsdatum, mitglied_seit, beitragsart, trainingsgruppe  ·  → trainingsgruppen · ← platzbuchungen (list + contextual +)
  *   turniere: turniername, turnierbeginn, turnierende, meldeschluss, wettbewerb, altersklasse, austragungsort, startgeld, …  ·  ← turnieranmeldungen (list + contextual +)
  *   turnieranmeldungen: einwilligung, teilnehmer_geburtsdatum, vereinsmitglied, verein, wettbewerb_wunsch, anmerkung, turnier, teilnehmer_vorname, …  ·  → turniere

@@ -265,7 +265,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         }
       }
       const photoContext = contextParts.length ? contextParts.join('\n') : undefined;
-      const schema = `{\n  "einwilligung": boolean | null, // Ich stimme der Verarbeitung meiner Daten zur Turnierorganisation zu\n  "teilnehmer_geburtsdatum": string | null, // YYYY-MM-DD\n  "vereinsmitglied": boolean | null, // Mitglied im TC Grünweiß\n  "verein": string | null, // Verein (für Gäste)\n  "wettbewerb_wunsch": string | null, // Wettbewerb und Altersklasse\n  "anmerkung": string | null, // Bemerkung\n  "turnier": string | null, // Display name from Turniere (see <available-records>)\n  "teilnehmer_vorname": string | null, // Vorname\n  "teilnehmer_nachname": string | null, // Nachname\n  "teilnehmer_email": string | null, // E-Mail\n  "telefon": string | null, // Telefon\n}`;
+      const schema = `{\n  "einwilligung": boolean | null, // Ich stimme der Verarbeitung meiner Daten zur Turnierorganisation zu\n  "teilnehmer_geburtsdatum": string | null, // YYYY-MM-DD\n  "vereinsmitglied": boolean | null, // Mitglied im TC Grünweiß\n  "verein": string | null, // Verein (für Gäste)\n  "wettbewerb_wunsch": string | null, // Wettbewerb und Altersklasse\n  "anmerkung": string | null, // Bemerkung\n  "turnier": string | null, // Display name from Turniere (see <available-records>)\n  "teilnehmer_vorname": string | null, // Vorname\n  "teilnehmer_nachname": string | null, // Nachname\n  "teilnehmer_email": string | null, // E-Mail\n  "telefon": string | null, // Telefon\n  "leistungsklasse": string | null, // Leistungsklasse (LK)\n}`;
       const raw = await extractFromInput<Record<string, unknown>>(schema, {
         dataUri: uri,
         userText: aiText.trim() || undefined,
@@ -355,7 +355,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="teilnehmer_geburtsdatum">{fieldLabel('turnieranmeldungen', 'teilnehmer_geburtsdatum')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="teilnehmer_geburtsdatum"
-          placeholder="Wann wurdest du geboren?"
+          placeholder=""
           mode="date"
           value={fields.teilnehmer_geburtsdatum ?? null}
           onChange={v => setFields(f => ({ ...f, teilnehmer_geburtsdatum: v ?? undefined }))}
@@ -384,7 +384,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="verein">{fieldLabel('turnieranmeldungen', 'verein')}</Label>
         <Input
           id="verein"
-          placeholder="z. B. TC Rot-Weiß Köln"
+          placeholder=""
           value={fields.verein ?? ''}
           onChange={e => setFields(f => ({ ...f, verein: e.target.value }))}
         />
@@ -395,7 +395,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="wettbewerb_wunsch">{fieldLabel('turnieranmeldungen', 'wettbewerb_wunsch')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="wettbewerb_wunsch"
-          placeholder="z. B. Herren 40 Einzel"
+          placeholder=""
           value={fields.wettbewerb_wunsch ?? ''}
           onChange={e => setFields(f => ({ ...f, wettbewerb_wunsch: e.target.value }))}
           required
@@ -410,7 +410,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="anmerkung">{fieldLabel('turnieranmeldungen', 'anmerkung')}</Label>
         <Textarea
           id="anmerkung"
-          placeholder="Wünsche oder Hinweise"
+          placeholder=""
           value={fields.anmerkung ?? ''}
           onChange={e => setFields(f => ({ ...f, anmerkung: e.target.value }))}
           rows={3}
@@ -422,7 +422,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="turnier">{fieldLabel('turnieranmeldungen', 'turnier')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="turnier"
-          placeholder="Welches Turnier?"
+          placeholder=""
           items={turniereListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.turniername ?? r.record_id),
@@ -442,7 +442,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="teilnehmer_vorname">{fieldLabel('turnieranmeldungen', 'teilnehmer_vorname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="teilnehmer_vorname"
-          placeholder="z. B. Anna"
+          placeholder=""
           value={fields.teilnehmer_vorname ?? ''}
           onChange={e => setFields(f => ({ ...f, teilnehmer_vorname: e.target.value }))}
           required
@@ -457,7 +457,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         <Label htmlFor="teilnehmer_nachname">{fieldLabel('turnieranmeldungen', 'teilnehmer_nachname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="teilnehmer_nachname"
-          placeholder="z. B. Müller"
+          placeholder=""
           value={fields.teilnehmer_nachname ?? ''}
           onChange={e => setFields(f => ({ ...f, teilnehmer_nachname: e.target.value }))}
           required
@@ -474,7 +474,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
           id="teilnehmer_email"
           type="email"
           inputMode="email"
-          placeholder="z. B. anna@beispiel.de"
+          placeholder=""
           value={fields.teilnehmer_email ?? ''}
           onChange={e => setFields(f => ({ ...f, teilnehmer_email: e.target.value }))}
           required
@@ -497,6 +497,17 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
         />
       </div>
     ),
+    'leistungsklasse': (
+      <div key="leistungsklasse" className="space-y-1.5">
+        <Label htmlFor="leistungsklasse">{fieldLabel('turnieranmeldungen', 'leistungsklasse')}</Label>
+        <Input
+          id="leistungsklasse"
+          placeholder=""
+          value={fields.leistungsklasse ?? ''}
+          onChange={e => setFields(f => ({ ...f, leistungsklasse: e.target.value }))}
+        />
+      </div>
+    ),
   };
   const orderedFields = applyFieldOrder(Object.keys(fieldBlocks), formEnhancements.fieldOrder);
   const orderedFieldsKey = orderedFields.map((it) => typeof it === 'string' ? it : it.row.join('+')).join(',');
@@ -511,7 +522,7 @@ export function TurnieranmeldungenDialog({ open, onClose, onSubmit, defaultValue
   //     kein passendes Backend-Feld in orderedFields) erscheinen NICHT als
   //     Input, sondern unten als kompakte 'Berechnungen'-Übersicht oder als
   //     Inline-Hint unter dem letzten beitragenden Input.
-  const FIELD_LABELS: Record<string, string> = {"einwilligung": "Ich stimme der Verarbeitung meiner Daten zur Turnierorganisation zu", "teilnehmer_geburtsdatum": "Geburtsdatum", "vereinsmitglied": "Mitglied im TC Grünweiß", "verein": "Verein (für Gäste)", "wettbewerb_wunsch": "Wettbewerb und Altersklasse", "anmerkung": "Bemerkung", "turnier": "Turnier", "teilnehmer_vorname": "Vorname", "teilnehmer_nachname": "Nachname", "teilnehmer_email": "E-Mail", "telefon": "Telefon"};
+  const FIELD_LABELS: Record<string, string> = {"einwilligung": "Ich stimme der Verarbeitung meiner Daten zur Turnierorganisation zu", "teilnehmer_geburtsdatum": "Geburtsdatum", "vereinsmitglied": "Mitglied im TC Grünweiß", "verein": "Verein (für Gäste)", "wettbewerb_wunsch": "Wettbewerb und Altersklasse", "anmerkung": "Bemerkung", "turnier": "Turnier", "teilnehmer_vorname": "Vorname", "teilnehmer_nachname": "Nachname", "teilnehmer_email": "E-Mail", "telefon": "Telefon", "leistungsklasse": "Leistungsklasse (LK)"};
   const CURRENCY_KEYS = new Set<string>([]);
   // Applookup-Referenz-Labels: pro applookup-Feld in dieser Form (ownKey)
   // eine Map { lookupKey: label } für ALLE Felder des Target-Schemas. Wird

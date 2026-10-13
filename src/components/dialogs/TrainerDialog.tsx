@@ -289,7 +289,7 @@ export function TrainerDialog({ open, onClose, onSubmit, defaultValues, recordId
         <Label htmlFor="vorname">{fieldLabel('trainer', 'vorname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="vorname"
-          placeholder="z. B. Anna"
+          placeholder=""
           value={fields.vorname ?? ''}
           onChange={e => setFields(f => ({ ...f, vorname: e.target.value }))}
           required
@@ -304,7 +304,7 @@ export function TrainerDialog({ open, onClose, onSubmit, defaultValues, recordId
         <Label htmlFor="nachname">{fieldLabel('trainer', 'nachname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="nachname"
-          placeholder="z. B. Müller"
+          placeholder=""
           value={fields.nachname ?? ''}
           onChange={e => setFields(f => ({ ...f, nachname: e.target.value }))}
           required
@@ -321,7 +321,7 @@ export function TrainerDialog({ open, onClose, onSubmit, defaultValues, recordId
           id="email"
           type="email"
           inputMode="email"
-          placeholder="z. B. anna.mueller@tc-gruenweiss.de"
+          placeholder=""
           value={fields.email ?? ''}
           onChange={e => setFields(f => ({ ...f, email: e.target.value }))}
         />
@@ -345,7 +345,7 @@ export function TrainerDialog({ open, onClose, onSubmit, defaultValues, recordId
         <Label htmlFor="trainerlizenz">{fieldLabel('trainer', 'trainerlizenz')}</Label>
         <Input
           id="trainerlizenz"
-          placeholder="z. B. C-Lizenz"
+          placeholder=""
           value={fields.trainerlizenz ?? ''}
           onChange={e => setFields(f => ({ ...f, trainerlizenz: e.target.value }))}
         />

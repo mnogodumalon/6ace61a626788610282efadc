@@ -312,7 +312,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="turniername">{fieldLabel('turniere', 'turniername')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="turniername"
-          placeholder="z. B. Sommercup 2026"
+          placeholder=""
           value={fields.turniername ?? ''}
           onChange={e => setFields(f => ({ ...f, turniername: e.target.value }))}
           required
@@ -327,7 +327,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="turnierbeginn">{fieldLabel('turniere', 'turnierbeginn')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="turnierbeginn"
-          placeholder="Wann beginnt das Turnier?"
+          placeholder=""
           mode="date"
           value={fields.turnierbeginn ?? null}
           onChange={v => setFields(f => ({ ...f, turnierbeginn: v ?? undefined }))}
@@ -343,7 +343,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="turnierende">{fieldLabel('turniere', 'turnierende')}</Label>
         <DatePicker
           id="turnierende"
-          placeholder="Wann endet das Turnier?"
+          placeholder=""
           mode="date"
           value={fields.turnierende ?? null}
           onChange={v => setFields(f => ({ ...f, turnierende: v ?? undefined }))}
@@ -355,7 +355,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="meldeschluss">{fieldLabel('turniere', 'meldeschluss')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="meldeschluss"
-          placeholder="Bis wann kann man melden?"
+          placeholder=""
           mode="date"
           value={fields.meldeschluss ?? null}
           onChange={v => setFields(f => ({ ...f, meldeschluss: v ?? undefined }))}
@@ -462,7 +462,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="altersklasse">{fieldLabel('turniere', 'altersklasse')}</Label>
         <Input
           id="altersklasse"
-          placeholder="z. B. U18, Herren 40"
+          placeholder=""
           value={fields.altersklasse ?? ''}
           onChange={e => setFields(f => ({ ...f, altersklasse: e.target.value }))}
         />
@@ -473,7 +473,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="austragungsort">{fieldLabel('turniere', 'austragungsort')}</Label>
         <Input
           id="austragungsort"
-          placeholder="z. B. Anlage Grünweiß"
+          placeholder=""
           value={fields.austragungsort ?? ''}
           onChange={e => setFields(f => ({ ...f, austragungsort: e.target.value }))}
         />
@@ -488,7 +488,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
           inputMode="decimal"
           step="any"
           {...numberInputProps(formEnhancements, 'startgeld')}
-          placeholder="z. B. 15"
+          placeholder=""
           value={fields.startgeld !== undefined ? fields.startgeld : (computedValues['startgeld'] ?? '')}
           onChange={e => setFields(f => ({ ...f, startgeld: clampNumberValue(formEnhancements, 'startgeld', e.target.value) }))}
         />
@@ -499,7 +499,7 @@ export function TurniereDialog({ open, onClose, onSubmit, defaultValues, recordI
         <Label htmlFor="beschreibung">{fieldLabel('turniere', 'beschreibung')}</Label>
         <Textarea
           id="beschreibung"
-          placeholder="Infos zum Turnier"
+          placeholder=""
           value={fields.beschreibung ?? ''}
           onChange={e => setFields(f => ({ ...f, beschreibung: e.target.value }))}
           rows={3}

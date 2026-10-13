@@ -43,9 +43,9 @@ export interface IntentLink {
 
 export const INTENTS: IntentLink[] = [
   // <custom:intents>
-  { path: '/intents/platz-buchen', label: { de: 'Platz buchen', en: 'Book a court' }, icon: IconCalendarPlus, description: 'Ein Mitglied bucht einen Platz für einen Zeitraum, ohne dass sich Buchungen überschneiden.' },
-  { path: '/intents/mitglied-aufnehmen', label: { de: 'Mitglied aufnehmen', en: 'Add a member' }, icon: IconUserPlus, description: 'Ein neues Mitglied wird mit Kontaktdaten und Beitragsart erfasst und direkt einer Trainingsgruppe zugeordnet.' },
-  { path: '/intents/trainingsgruppe-anlegen', label: { de: 'Trainingsgruppe anlegen', en: 'Create a training group' }, icon: IconUsersGroup, description: 'Eine Trainingsgruppe wird mit Trainer, Wochentag und Uhrzeiten angelegt.' },
+  { path: '/intents/platz-buchen', label: { de: 'Platz buchen', en: 'Book a court' }, icon: IconCalendarPlus, description: { de: 'Ein Mitglied bucht einen Platz für einen Zeitraum, ohne dass sich Buchungen überschneiden.', en: 'A member books a court for a time period without any bookings overlapping.' } },
+  { path: '/intents/mitglied-aufnehmen', label: { de: 'Mitglied aufnehmen', en: 'Add a member' }, icon: IconUserPlus, description: { de: 'Ein neues Mitglied wird mit Kontaktdaten und Beitragsart erfasst und direkt einer Trainingsgruppe zugeordnet.', en: 'A new member is recorded with contact details and membership type and assigned directly to a training group.' } },
+  { path: '/intents/trainingsgruppe-anlegen', label: { de: 'Trainingsgruppe anlegen', en: 'Create a training group' }, icon: IconUsersGroup, description: { de: 'Eine Trainingsgruppe wird mit Trainer, Wochentag und Uhrzeiten angelegt.', en: 'A training group is created with coach, weekday, and times.' } },
   // </custom:intents>
 ];
 
@@ -65,5 +65,5 @@ export const INTENTS_PENDING = false;
  * pulsing "werden erstellt …" in every deployed Phase-1 bundle forever — no
  * code path redeploys Phase 1 without the flag (live 03.09.2026).
  */
-export const INTENTS_PENDING_SINCE: string | null = '2026-10-13T16:52:40+00:00';
+export const INTENTS_PENDING_SINCE: string | null = null;
 export const PENDING_MAX_MINUTES = 30;

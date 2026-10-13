@@ -358,7 +358,7 @@ export function PlatzbuchungenDialog({ open, onClose, onSubmit, defaultValues, r
         <Label htmlFor="mitglied">{fieldLabel('platzbuchungen', 'mitglied')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="mitglied"
-          placeholder="Welches Mitglied?"
+          placeholder=""
           items={mitgliederListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -380,7 +380,7 @@ export function PlatzbuchungenDialog({ open, onClose, onSubmit, defaultValues, r
           value={lookupKey(fields.platz) ?? ''}
           onValueChange={v => setFields(f => ({ ...f, platz: v === 'none' ? undefined : v as any }))}
         >
-          <SelectTrigger id="platz" className="max-sm:h-11"><SelectValue placeholder="z. B. Platz 1, Platz 2" /></SelectTrigger>
+          <SelectTrigger id="platz" className="max-sm:h-11"><SelectValue placeholder="" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="none">—</SelectItem>
             <SelectItem value="platz_1">{lookupLabel('platzbuchungen', 'platz', 'platz_1') ?? 'Platz 1'}</SelectItem>
@@ -437,7 +437,7 @@ export function PlatzbuchungenDialog({ open, onClose, onSubmit, defaultValues, r
         <Label htmlFor="beginn">{fieldLabel('platzbuchungen', 'beginn')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="beginn"
-          placeholder="Wann beginnt die Buchung?"
+          placeholder=""
           mode="datetime"
           value={fields.beginn ?? null}
           onChange={v => setFields(f => ({ ...f, beginn: v ?? undefined }))}
@@ -453,7 +453,7 @@ export function PlatzbuchungenDialog({ open, onClose, onSubmit, defaultValues, r
         <Label htmlFor="ende">{fieldLabel('platzbuchungen', 'ende')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="ende"
-          placeholder="Wann endet die Buchung?"
+          placeholder=""
           mode="datetime"
           value={fields.ende ?? null}
           onChange={v => setFields(f => ({ ...f, ende: v ?? undefined }))}
@@ -515,7 +515,7 @@ export function PlatzbuchungenDialog({ open, onClose, onSubmit, defaultValues, r
         <Label htmlFor="bemerkung">{fieldLabel('platzbuchungen', 'bemerkung')}</Label>
         <Textarea
           id="bemerkung"
-          placeholder="Hinweise zur Buchung"
+          placeholder=""
           value={fields.bemerkung ?? ''}
           onChange={e => setFields(f => ({ ...f, bemerkung: e.target.value }))}
           rows={3}

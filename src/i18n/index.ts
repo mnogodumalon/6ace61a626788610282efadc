@@ -1614,6 +1614,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         "name": "Trainingsgruppen",
         "app_id": "6ace6186c78c00a580e1588d",
         "fields": {
+          "max_teilnehmer": "Maximale Teilnehmerzahl",
           "gruppenname": "Gruppenname",
           "trainer": "Trainer",
           "wochentag": "Wochentag",
@@ -1648,9 +1649,9 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         },
         "lookups": {
           "beitragsart": {
+            "erwachsener": "Erwachsener",
             "jugendlicher": "Jugendlicher",
-            "familie": "Familie",
-            "erwachsener": "Erwachsener"
+            "familie": "Familie"
           }
         }
       },
@@ -1693,7 +1694,8 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "teilnehmer_vorname": "Vorname",
           "teilnehmer_nachname": "Nachname",
           "teilnehmer_email": "E-Mail",
-          "telefon": "Telefon"
+          "telefon": "Telefon",
+          "leistungsklasse": "Leistungsklasse (LK)"
         },
         "lookups": {}
       },
@@ -1750,12 +1752,13 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         "name": "Training Groups",
         "app_id": "6ace6186c78c00a580e1588d",
         "fields": {
+          "max_teilnehmer": "Maximum Number of Participants",
           "gruppenname": "Group Name",
           "trainer": "Coach",
           "wochentag": "Weekday",
           "beginn": "Start (Time)",
           "ende": "End (Time)",
-          "bemerkung": "Remarks"
+          "bemerkung": "Note"
         },
         "lookups": {
           "wochentag": {
@@ -1784,9 +1787,9 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
         },
         "lookups": {
           "beitragsart": {
+            "erwachsener": "Adult",
             "jugendlicher": "Youth",
-            "familie": "Family",
-            "erwachsener": "Adult"
+            "familie": "Family"
           }
         }
       },
@@ -1824,12 +1827,13 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "vereinsmitglied": "Member of TC Grünweiß",
           "verein": "Club (for guests)",
           "wettbewerb_wunsch": "Event and Age Group",
-          "anmerkung": "Remarks",
+          "anmerkung": "Note",
           "turnier": "Tournament",
           "teilnehmer_vorname": "First Name",
           "teilnehmer_nachname": "Last Name",
           "teilnehmer_email": "Email",
-          "telefon": "Phone"
+          "telefon": "Phone",
+          "leistungsklasse": "Skill Level (LK)"
         },
         "lookups": {}
       },
@@ -1843,7 +1847,7 @@ export const LABELS: Record<CoreLocale, LabelBundle> = {
           "beginn": "Start",
           "ende": "End",
           "buchungsart": "Booking Type",
-          "bemerkung": "Remarks"
+          "bemerkung": "Note"
         },
         "lookups": {
           "platz": {

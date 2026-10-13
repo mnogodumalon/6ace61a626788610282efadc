@@ -37,6 +37,7 @@ export function TurnieranmeldungenDetails({
         <RecordField label={fieldLabel('turnieranmeldungen', 'teilnehmer_nachname')} value={record.fields.teilnehmer_nachname} format="text" />
         <RecordField label={fieldLabel('turnieranmeldungen', 'teilnehmer_email')} value={record.fields.teilnehmer_email} format="email" />
         <RecordField label={fieldLabel('turnieranmeldungen', 'telefon')} value={record.fields.telefon} format="text" />
+        <RecordField label={fieldLabel('turnieranmeldungen', 'leistungsklasse')} value={record.fields.leistungsklasse} format="text" />
       </RecordSection>
 
       {/* N:1 — verknüpfte Records: IMMER klickbar, nie eine Text-Sackgasse. */}

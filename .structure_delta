@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "changes": [
+    {
+      "kind": "field_added",
+      "entity": "trainingsgruppen",
+      "field": "max_teilnehmer",
+      "fulltype": "number",
+      "label": "Maximale Teilnehmerzahl"
+    },
+    {
+      "kind": "field_added",
+      "entity": "turnieranmeldungen",
+      "field": "leistungsklasse",
+      "fulltype": "string/text",
+      "label": "Leistungsklasse (LK)"
+    }
+  ],
+  "counts": {
+    "field_added": 2
+  },
+  "harmless_only": false
+}

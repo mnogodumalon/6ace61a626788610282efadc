@@ -276,7 +276,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         }
       }
       const photoContext = contextParts.length ? contextParts.join('\n') : undefined;
-      const schema = `{\n  "vorname": string | null, // Vorname\n  "nachname": string | null, // Nachname\n  "email": string | null, // E-Mail\n  "telefon": string | null, // Telefon\n  "geburtsdatum": string | null, // YYYY-MM-DD\n  "mitglied_seit": string | null, // YYYY-MM-DD\n  "beitragsart": LookupValue | null, // Beitragsart (select one key: "jugendlicher" | "familie" | "erwachsener") mapping: jugendlicher=Jugendlicher, familie=Familie, erwachsener=Erwachsener\n  "trainingsgruppe": string | null, // Display name from Trainingsgruppen (see <available-records>)\n}`;
+      const schema = `{\n  "vorname": string | null, // Vorname\n  "nachname": string | null, // Nachname\n  "email": string | null, // E-Mail\n  "telefon": string | null, // Telefon\n  "geburtsdatum": string | null, // YYYY-MM-DD\n  "mitglied_seit": string | null, // YYYY-MM-DD\n  "beitragsart": LookupValue | null, // Beitragsart (select one key: "erwachsener" | "jugendlicher" | "familie") mapping: erwachsener=Erwachsener, jugendlicher=Jugendlicher, familie=Familie\n  "trainingsgruppe": string | null, // Display name from Trainingsgruppen (see <available-records>)\n}`;
       const raw = await extractFromInput<Record<string, unknown>>(schema, {
         dataUri: uri,
         userText: aiText.trim() || undefined,
@@ -350,7 +350,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         <Label htmlFor="vorname">{fieldLabel('mitglieder', 'vorname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="vorname"
-          placeholder="z. B. Anna"
+          placeholder=""
           value={fields.vorname ?? ''}
           onChange={e => setFields(f => ({ ...f, vorname: e.target.value }))}
           required
@@ -365,7 +365,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         <Label htmlFor="nachname">{fieldLabel('mitglieder', 'nachname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="nachname"
-          placeholder="z. B. Müller"
+          placeholder=""
           value={fields.nachname ?? ''}
           onChange={e => setFields(f => ({ ...f, nachname: e.target.value }))}
           required
@@ -382,7 +382,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
           id="email"
           type="email"
           inputMode="email"
-          placeholder="z. B. anna@beispiel.de"
+          placeholder=""
           value={fields.email ?? ''}
           onChange={e => setFields(f => ({ ...f, email: e.target.value }))}
           required
@@ -410,7 +410,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         <Label htmlFor="geburtsdatum">{fieldLabel('mitglieder', 'geburtsdatum')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="geburtsdatum"
-          placeholder="Wann wurde das Mitglied geboren?"
+          placeholder=""
           mode="date"
           value={fields.geburtsdatum ?? null}
           onChange={v => setFields(f => ({ ...f, geburtsdatum: v ?? undefined }))}
@@ -426,7 +426,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         <Label htmlFor="mitglied_seit">{fieldLabel('mitglieder', 'mitglied_seit')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <DatePicker
           id="mitglied_seit"
-          placeholder="Seit wann im Verein?"
+          placeholder=""
           mode="date"
           value={fields.mitglied_seit ?? null}
           onChange={v => setFields(f => ({ ...f, mitglied_seit: v ?? undefined }))}
@@ -441,6 +441,19 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
       <div key="beitragsart" className="space-y-1.5">
         <Label htmlFor="beitragsart">{fieldLabel('mitglieder', 'beitragsart')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <div role="radiogroup" className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            role="radio"
+            aria-checked={lookupKey(fields.beitragsart) === 'erwachsener'}
+            onClick={() => setFields(f => ({ ...f, beitragsart: (lookupKey(f.beitragsart) === 'erwachsener' ? undefined : 'erwachsener') as any }))}
+            className={`inline-flex items-center justify-center min-h-9 max-sm:min-h-11 max-sm:px-4 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+              lookupKey(fields.beitragsart) === 'erwachsener'
+                ? 'bg-foreground text-background border-foreground'
+                : 'bg-background text-foreground border-input hover:bg-accent'
+            }`}
+          >
+            {lookupLabel('mitglieder', 'beitragsart', 'erwachsener') ?? 'Erwachsener'}
+          </button>
           <button
             type="button"
             role="radio"
@@ -467,19 +480,6 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
           >
             {lookupLabel('mitglieder', 'beitragsart', 'familie') ?? 'Familie'}
           </button>
-          <button
-            type="button"
-            role="radio"
-            aria-checked={lookupKey(fields.beitragsart) === 'erwachsener'}
-            onClick={() => setFields(f => ({ ...f, beitragsart: (lookupKey(f.beitragsart) === 'erwachsener' ? undefined : 'erwachsener') as any }))}
-            className={`inline-flex items-center justify-center min-h-9 max-sm:min-h-11 max-sm:px-4 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-              lookupKey(fields.beitragsart) === 'erwachsener'
-                ? 'bg-foreground text-background border-foreground'
-                : 'bg-background text-foreground border-input hover:bg-accent'
-            }`}
-          >
-            {lookupLabel('mitglieder', 'beitragsart', 'erwachsener') ?? 'Erwachsener'}
-          </button>
         </div>
         {showErrors && !fields.beitragsart && (
           <p className="text-xs text-destructive mt-1" role="alert">{requiredMessage('mitglieder', 'beitragsart')}</p>
@@ -491,7 +491,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
         <Label htmlFor="trainingsgruppe">{fieldLabel('mitglieder', 'trainingsgruppe')}</Label>
         <Combobox
           id="trainingsgruppe"
-          placeholder="Welche Trainingsgruppe?"
+          placeholder=""
           items={trainingsgruppenListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.gruppenname ?? r.record_id),
@@ -523,7 +523,7 @@ export function MitgliederDialog({ open, onClose, onSubmit, defaultValues, recor
   // eine Map { lookupKey: label } für ALLE Felder des Target-Schemas. Wird
   // beim Render-Walk gefiltert auf die in der computed-Formel tatsächlich
   // referenzierten lookupKeys (siehe applookupRefs unten).
-  const APPLOOKUP_LABELS: Record<string, Record<string, string>> = {"trainingsgruppe": {"gruppenname": "Gruppenname", "trainer": "Trainer", "wochentag": "Wochentag", "beginn": "Beginn (Uhrzeit)", "ende": "Ende (Uhrzeit)", "bemerkung": "Bemerkung"}};
+  const APPLOOKUP_LABELS: Record<string, Record<string, string>> = {"trainingsgruppe": {"max_teilnehmer": "Maximale Teilnehmerzahl", "gruppenname": "Gruppenname", "trainer": "Trainer", "wochentag": "Wochentag", "beginn": "Beginn (Uhrzeit)", "ende": "Ende (Uhrzeit)", "bemerkung": "Bemerkung"}};
   const inputFields = useMemo(() => flattenFieldOrder(orderedFields), [orderedFieldsKey]);
   const backendFieldSet = useMemo(() => new Set(inputFields), [inputFields.join(',')]);
   const virtualComputed = useMemo(

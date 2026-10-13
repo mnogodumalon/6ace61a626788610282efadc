@@ -1,7 +1,7 @@
 /**
  * useMitgliedAufnehmenFlow — the plumbing of the flow « Mitglied aufnehmen », generated from the plan.
  *
- * Writes `mitglieder`: asks `vorname`, `nachname`, `email`, `telefon`, `geburtsdatum`, `beitragsart`, `trainingsgruppe`; sets `mitglied_seit` itself.
+ * Writes `mitglieder`: asks `email`, `telefon`, `vorname`, `nachname`, `beitragsart`, `geburtsdatum`, `trainingsgruppe`; sets `mitglied_seit` itself.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
  * the plan), and the submit plan with its fixed and derived values. A page
@@ -16,17 +16,17 @@
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useMitgliedAufnehmenFlow({
- *     steps: { trainingsgruppe: 1, vorname: 2, nachname: 2, email: 2, telefon: 2, geburtsdatum: 2, beitragsart: 2 },
+ *     steps: { trainingsgruppe: 1, email: 2, telefon: 2, vorname: 2, nachname: 2, beitragsart: 2, geburtsdatum: 2 },
  *     items: { trainingsgruppe: r => ({ id: r.id, title: fieldText(r, 'gruppenname') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.trainingsgruppe.select} {...flow.pick('trainingsgruppe')} />
- *     <Bound form={flow.forms.mitglieder} name="vorname" />
- *     <Bound form={flow.forms.mitglieder} name="nachname" />
  *     <Bound form={flow.forms.mitglieder} name="email" />
  *     <Bound form={flow.forms.mitglieder} name="telefon" />
- *     <Bound form={flow.forms.mitglieder} name="geburtsdatum" />
+ *     <Bound form={flow.forms.mitglieder} name="vorname" />
+ *     <Bound form={flow.forms.mitglieder} name="nachname" />
  *     <Bound form={flow.forms.mitglieder} name="beitragsart" />
+ *     <Bound form={flow.forms.mitglieder} name="geburtsdatum" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -92,10 +92,10 @@ function hasValues(form: StepForm): boolean {
 export function useMitgliedAufnehmenFlow(options: MitgliedAufnehmenFlowOptions = {}) {
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const mitglieder = useStepForm('mitglieder', {
-    fields: ["vorname", "nachname", "email", "telefon", "geburtsdatum", "beitragsart", "trainingsgruppe"],
-    steps: only(steps, ["vorname", "nachname", "email", "telefon", "geburtsdatum", "beitragsart", "trainingsgruppe"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["vorname", "nachname", "email", "telefon", "geburtsdatum", "beitragsart", "trainingsgruppe"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["vorname", "nachname", "email", "telefon", "geburtsdatum", "beitragsart", "trainingsgruppe"]),
+    fields: ["email", "telefon", "vorname", "nachname", "beitragsart", "geburtsdatum", "trainingsgruppe"],
+    steps: only(steps, ["email", "telefon", "vorname", "nachname", "beitragsart", "geburtsdatum", "trainingsgruppe"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["email", "telefon", "vorname", "nachname", "beitragsart", "geburtsdatum", "trainingsgruppe"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["email", "telefon", "vorname", "nachname", "beitragsart", "geburtsdatum", "trainingsgruppe"]),
   });
   const forms: MitgliedAufnehmenForms = { mitglieder };
   const formList: StepForm[] = [mitglieder];

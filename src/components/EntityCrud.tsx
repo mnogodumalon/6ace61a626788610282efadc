@@ -42,7 +42,7 @@
  * Overlay content per entity (the host renders these — you never compose
  * Details blocks yourself):
  *   trainer: vorname, nachname, email, telefon, trainerlizenz  ·  ← trainingsgruppen (list + contextual +)
- *   trainingsgruppen: gruppenname, trainer, wochentag, beginn, ende, bemerkung  ·  → trainer · ← mitglieder (list + contextual +)
+ *   trainingsgruppen: max_teilnehmer, gruppenname, trainer, wochentag, beginn, ende, bemerkung  ·  → trainer · ← mitglieder (list + contextual +)
  *   mitglieder: vorname, nachname, email, telefon, geburtsdatum, mitglied_seit, beitragsart, trainingsgruppe  ·  → trainingsgruppen · ← platzbuchungen (list + contextual +)
  *   turniere: turniername, turnierbeginn, turnierende, meldeschluss, wettbewerb, altersklasse, austragungsort, startgeld, …  ·  ← turnieranmeldungen (list + contextual +)
  *   turnieranmeldungen: einwilligung, teilnehmer_geburtsdatum, vereinsmitglied, verein, wettbewerb_wunsch, anmerkung, turnier, teilnehmer_vorname, …  ·  → turniere

@@ -1,7 +1,7 @@
 /**
  * useTrainingsgruppeAnlegenFlow — the plumbing of the flow « Trainingsgruppe anlegen », generated from the plan.
  *
- * Writes `trainingsgruppen`: asks `gruppenname`, `trainer`, `wochentag`, `beginn`, `ende`, `bemerkung`.
+ * Writes `trainingsgruppen`: asks `ende`, `beginn`, `trainer`, `bemerkung`, `wochentag`, `gruppenname`.
  * The hook OWNS: the form(s) with exactly these fields and the plan's required
  * ingredients, one record search per picked field (columns and filter from
  * the plan), and the submit plan with its fixed and derived values. A page
@@ -16,16 +16,16 @@
  *   messages  the sentence for an empty required field, per field
  *
  *   const flow = useTrainingsgruppeAnlegenFlow({
- *     steps: { trainer: 1, gruppenname: 2, wochentag: 2, beginn: 2, ende: 2, bemerkung: 2 },
+ *     steps: { trainer: 1, ende: 2, beginn: 2, bemerkung: 2, wochentag: 2, gruppenname: 2 },
  *     items: { trainer: r => ({ id: r.id, title: fieldText(r, 'vorname') }) },
  *   });
  *   <IntentWizardShell forms={flow.forms} draftKey={flow.draftKey} …>
  *     <EntitySelectStep {...flow.picks.trainer.select} {...flow.pick('trainer')} />
- *     <Bound form={flow.forms.trainingsgruppen} name="gruppenname" />
- *     <Bound form={flow.forms.trainingsgruppen} name="wochentag" />
- *     <Bound form={flow.forms.trainingsgruppen} name="beginn" />
  *     <Bound form={flow.forms.trainingsgruppen} name="ende" />
+ *     <Bound form={flow.forms.trainingsgruppen} name="beginn" />
  *     <Bound form={flow.forms.trainingsgruppen} name="bemerkung" />
+ *     <Bound form={flow.forms.trainingsgruppen} name="wochentag" />
+ *     <Bound form={flow.forms.trainingsgruppen} name="gruppenname" />
  *     <StepNav onNext={() => flow.validateStep(n)} />
  *     {!flow.submit.done && <SummaryStep forms={flow.formList} submit={flow.submit} />}
  *     {flow.submit.result && <SuccessStep result={flow.submit.result} forms={flow.formList} submit={flow.submit} />}
@@ -91,10 +91,10 @@ function hasValues(form: StepForm): boolean {
 export function useTrainingsgruppeAnlegenFlow(options: TrainingsgruppeAnlegenFlowOptions = {}) {
   const steps = { ...DEFAULT_STEPS, ...(options.steps ?? {}) } as Record<string, number>;
   const trainingsgruppen = useStepForm('trainingsgruppen', {
-    fields: ["gruppenname", "trainer", "wochentag", "beginn", "ende", "bemerkung"],
-    steps: only(steps, ["gruppenname", "trainer", "wochentag", "beginn", "ende", "bemerkung"]) as Record<string, number>,
-    initial: only(options.initial as FormValues | undefined, ["gruppenname", "trainer", "wochentag", "beginn", "ende", "bemerkung"]),
-    messages: only(options.messages as Record<string, string> | undefined, ["gruppenname", "trainer", "wochentag", "beginn", "ende", "bemerkung"]),
+    fields: ["ende", "beginn", "trainer", "bemerkung", "wochentag", "gruppenname"],
+    steps: only(steps, ["ende", "beginn", "trainer", "bemerkung", "wochentag", "gruppenname"]) as Record<string, number>,
+    initial: only(options.initial as FormValues | undefined, ["ende", "beginn", "trainer", "bemerkung", "wochentag", "gruppenname"]),
+    messages: only(options.messages as Record<string, string> | undefined, ["ende", "beginn", "trainer", "bemerkung", "wochentag", "gruppenname"]),
   });
   const forms: TrainingsgruppeAnlegenForms = { trainingsgruppen };
   const formList: StepForm[] = [trainingsgruppen];

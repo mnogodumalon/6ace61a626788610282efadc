@@ -89,6 +89,22 @@
       "name": "Trainingsgruppen",
       "main": false,
       "controls": {
+        "max_teilnehmer": {
+          "identifier": "max_teilnehmer",
+          "label": "Maximale Teilnehmerzahl",
+          "type": "number",
+          "subtype": null,
+          "fulltype": "number",
+          "description": "A decimal number value (or `null`/`None`).",
+          "required": false,
+          "in_list": false,
+          "in_mobile_list": false,
+          "in_text": false,
+          "in_structured_search": null,
+          "in_fulltext_search": null,
+          "in_expert_search": true,
+          "precision": null
+        },
         "gruppenname": {
           "identifier": "gruppenname",
           "label": "Gruppenname",
@@ -112,7 +128,7 @@
           "fulltype": "applookup/select",
           "description": "A reference to a LivingApp record from the target lookup app 'Trainer' with the id `6ace6181153521bfe0aabae6` (or `null`/`None`).\n\nThe field value will be a valid record URL in the form `https://my.living-apps.de/rest/apps/6ace6181153521bfe0aabae6/records/<record-id>` (or `null`/`None`).\n\nWhen writing, either pass a record URL through exactly as this API returned it, or send the portable relative form `/apps/6ace6181153521bfe0aabae6/records/<record-id>`. Other equivalent record-URL forms are accepted as well.\n\nDisplayed as single-select field in HTML pages.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": true,
           "in_text": true,
           "in_structured_search": null,
@@ -128,7 +144,7 @@
           "fulltype": "lookup/select",
           "description": "One selected option of multiple available options (or `null`/`None`).\n\nThe available options are defined in the `lookup_data` attribute of this control.\n\nThe field value will be the key in this `lookup_data` attribute (or `null`/`None`).\n\nDisplayed as single-select field in HTML pages.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
@@ -264,7 +280,7 @@
           "fulltype": "date/date",
           "description": "A calendar date consisting of year, month and day (or `null`/`None`)\n\nThe field value will be a string in the format `<YYYY>-<MM>-<DD>` (or `null`/`None`).\n\nFor example: `2000-02-29`.\n\nFor `POST`/`PUT`/`PATCH` requests the REST API uses a liberal parsing approach so that strings like `2026`, `February 29, 2000 12:34 MEST`, `letztes Jahr` etc. will be accepted as value date values. However this runs the risk of parsing ambiguous values incorrectly. To ensure reliable parsing it is best to use the canonical format specified above.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
@@ -301,9 +317,9 @@
           "in_fulltext_search": null,
           "in_expert_search": true,
           "lookup_data": {
+            "erwachsener": "Erwachsener",
             "jugendlicher": "Jugendlicher",
-            "familie": "Familie",
-            "erwachsener": "Erwachsener"
+            "familie": "Familie"
           }
         },
         "trainingsgruppe": {
@@ -352,7 +368,7 @@
           "fulltype": "date/date",
           "description": "A calendar date consisting of year, month and day (or `null`/`None`)\n\nThe field value will be a string in the format `<YYYY>-<MM>-<DD>` (or `null`/`None`).\n\nFor example: `2000-02-29`.\n\nFor `POST`/`PUT`/`PATCH` requests the REST API uses a liberal parsing approach so that strings like `2026`, `February 29, 2000 12:34 MEST`, `letztes Jahr` etc. will be accepted as value date values. However this runs the risk of parsing ambiguous values incorrectly. To ensure reliable parsing it is best to use the canonical format specified above.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": true,
           "in_text": true,
           "in_structured_search": null,
@@ -367,7 +383,7 @@
           "fulltype": "date/date",
           "description": "A calendar date consisting of year, month and day (or `null`/`None`)\n\nThe field value will be a string in the format `<YYYY>-<MM>-<DD>` (or `null`/`None`).\n\nFor example: `2000-02-29`.\n\nFor `POST`/`PUT`/`PATCH` requests the REST API uses a liberal parsing approach so that strings like `2026`, `February 29, 2000 12:34 MEST`, `letztes Jahr` etc. will be accepted as value date values. However this runs the risk of parsing ambiguous values incorrectly. To ensure reliable parsing it is best to use the canonical format specified above.",
           "required": false,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
@@ -382,7 +398,7 @@
           "fulltype": "date/date",
           "description": "A calendar date consisting of year, month and day (or `null`/`None`)\n\nThe field value will be a string in the format `<YYYY>-<MM>-<DD>` (or `null`/`None`).\n\nFor example: `2000-02-29`.\n\nFor `POST`/`PUT`/`PATCH` requests the REST API uses a liberal parsing approach so that strings like `2026`, `February 29, 2000 12:34 MEST`, `letztes Jahr` etc. will be accepted as value date values. However this runs the risk of parsing ambiguous values incorrectly. To ensure reliable parsing it is best to use the canonical format specified above.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
@@ -397,7 +413,7 @@
           "fulltype": "multiplelookup/checkbox",
           "description": "Arbitrary number of selected options out of multiple available ones.\n\nThe available options are defined in the `lookup_data` attribute of this control.\n\nThe field value will be a list of keys from this `lookup_data` attribute.\n\nDisplayed as multiple checkbox fields in HTML pages.",
           "required": false,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": false,
           "in_text": false,
           "in_structured_search": null,
@@ -578,7 +594,7 @@
           "fulltype": "applookup/select",
           "description": "A reference to a LivingApp record from the target lookup app 'Turniere' with the id `6ace618783f5be52d7c5586a` (or `null`/`None`).\n\nThe field value will be a valid record URL in the form `https://my.living-apps.de/rest/apps/6ace618783f5be52d7c5586a/records/<record-id>` (or `null`/`None`).\n\nWhen writing, either pass a record URL through exactly as this API returned it, or send the portable relative form `/apps/6ace618783f5be52d7c5586a/records/<record-id>`. Other equivalent record-URL forms are accepted as well.\n\nDisplayed as single-select field in HTML pages.",
           "required": true,
-          "in_list": true,
+          "in_list": false,
           "in_mobile_list": true,
           "in_text": true,
           "in_structured_search": null,
@@ -644,6 +660,21 @@
           "in_text": false,
           "in_structured_search": null,
           "in_fulltext_search": true,
+          "in_expert_search": true
+        },
+        "leistungsklasse": {
+          "identifier": "leistungsklasse",
+          "label": "Leistungsklasse (LK)",
+          "type": "string",
+          "subtype": "text",
+          "fulltype": "string/text",
+          "description": "A string value not longer than 4000 characters (or `null`/`None`).",
+          "required": false,
+          "in_list": false,
+          "in_mobile_list": false,
+          "in_text": false,
+          "in_structured_search": null,
+          "in_fulltext_search": null,
           "in_expert_search": true
         }
       }

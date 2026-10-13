@@ -279,7 +279,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
         }
       }
       const photoContext = contextParts.length ? contextParts.join('\n') : undefined;
-      const schema = `{\n  "gruppenname": string | null, // Gruppenname\n  "trainer": string | null, // Display name from Trainer (see <available-records>)\n  "wochentag": LookupValue | null, // Wochentag (select one key: "montag" | "dienstag" | "mittwoch" | "donnerstag" | "freitag" | "samstag" | "sonntag") mapping: montag=Montag, dienstag=Dienstag, mittwoch=Mittwoch, donnerstag=Donnerstag, freitag=Freitag, samstag=Samstag, sonntag=Sonntag\n  "beginn": string | null, // Beginn (Uhrzeit)\n  "ende": string | null, // Ende (Uhrzeit)\n  "bemerkung": string | null, // Bemerkung\n}`;
+      const schema = `{\n  "max_teilnehmer": number | null, // Maximale Teilnehmerzahl\n  "gruppenname": string | null, // Gruppenname\n  "trainer": string | null, // Display name from Trainer (see <available-records>)\n  "wochentag": LookupValue | null, // Wochentag (select one key: "montag" | "dienstag" | "mittwoch" | "donnerstag" | "freitag" | "samstag" | "sonntag") mapping: montag=Montag, dienstag=Dienstag, mittwoch=Mittwoch, donnerstag=Donnerstag, freitag=Freitag, samstag=Samstag, sonntag=Sonntag\n  "beginn": string | null, // Beginn (Uhrzeit)\n  "ende": string | null, // Ende (Uhrzeit)\n  "bemerkung": string | null, // Bemerkung\n}`;
       const raw = await extractFromInput<Record<string, unknown>>(schema, {
         dataUri: uri,
         userText: aiText.trim() || undefined,
@@ -348,12 +348,27 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
     : t('new_entity', { entity: appLabel('trainingsgruppen') });
 
   const fieldBlocks: Record<string, React.ReactNode> = {
+    'max_teilnehmer': (
+      <div key="max_teilnehmer" className="space-y-1.5">
+        <Label htmlFor="max_teilnehmer">{fieldLabel('trainingsgruppen', 'max_teilnehmer')}</Label>
+        <Input
+          id="max_teilnehmer"
+          type="number"
+          inputMode="decimal"
+          step="any"
+          {...numberInputProps(formEnhancements, 'max_teilnehmer')}
+          placeholder=""
+          value={fields.max_teilnehmer !== undefined ? fields.max_teilnehmer : (computedValues['max_teilnehmer'] ?? '')}
+          onChange={e => setFields(f => ({ ...f, max_teilnehmer: clampNumberValue(formEnhancements, 'max_teilnehmer', e.target.value) }))}
+        />
+      </div>
+    ),
     'gruppenname': (
       <div key="gruppenname" className="space-y-1.5">
         <Label htmlFor="gruppenname">{fieldLabel('trainingsgruppen', 'gruppenname')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="gruppenname"
-          placeholder="z. B. Jugend U14"
+          placeholder=""
           value={fields.gruppenname ?? ''}
           onChange={e => setFields(f => ({ ...f, gruppenname: e.target.value }))}
           required
@@ -368,7 +383,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
         <Label htmlFor="trainer">{fieldLabel('trainingsgruppen', 'trainer')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Combobox
           id="trainer"
-          placeholder="Welcher Trainer?"
+          placeholder=""
           items={trainerListAll.map(r => ({
             id: r.record_id,
             label: String(r.fields.vorname ?? r.record_id),
@@ -390,7 +405,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
           value={lookupKey(fields.wochentag) ?? ''}
           onValueChange={v => setFields(f => ({ ...f, wochentag: v === 'none' ? undefined : v as any }))}
         >
-          <SelectTrigger id="wochentag" className="max-sm:h-11"><SelectValue placeholder="z. B. Montag, Mittwoch" /></SelectTrigger>
+          <SelectTrigger id="wochentag" className="max-sm:h-11"><SelectValue placeholder="" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="none">—</SelectItem>
             <SelectItem value="montag">{lookupLabel('trainingsgruppen', 'wochentag', 'montag') ?? 'Montag'}</SelectItem>
@@ -412,7 +427,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
         <Label htmlFor="beginn">{fieldLabel('trainingsgruppen', 'beginn')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="beginn"
-          placeholder="z. B. 17:00"
+          placeholder=""
           value={fields.beginn ?? ''}
           onChange={e => setFields(f => ({ ...f, beginn: e.target.value }))}
           required
@@ -427,7 +442,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
         <Label htmlFor="ende">{fieldLabel('trainingsgruppen', 'ende')} <span className="text-destructive" aria-hidden="true">*</span></Label>
         <Input
           id="ende"
-          placeholder="z. B. 18:30"
+          placeholder=""
           value={fields.ende ?? ''}
           onChange={e => setFields(f => ({ ...f, ende: e.target.value }))}
           required
@@ -442,7 +457,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
         <Label htmlFor="bemerkung">{fieldLabel('trainingsgruppen', 'bemerkung')}</Label>
         <Textarea
           id="bemerkung"
-          placeholder="Hinweise zur Gruppe"
+          placeholder=""
           value={fields.bemerkung ?? ''}
           onChange={e => setFields(f => ({ ...f, bemerkung: e.target.value }))}
           rows={3}
@@ -463,7 +478,7 @@ export function TrainingsgruppenDialog({ open, onClose, onSubmit, defaultValues,
   //     kein passendes Backend-Feld in orderedFields) erscheinen NICHT als
   //     Input, sondern unten als kompakte 'Berechnungen'-Übersicht oder als
   //     Inline-Hint unter dem letzten beitragenden Input.
-  const FIELD_LABELS: Record<string, string> = {"gruppenname": "Gruppenname", "trainer": "Trainer", "wochentag": "Wochentag", "beginn": "Beginn (Uhrzeit)", "ende": "Ende (Uhrzeit)", "bemerkung": "Bemerkung"};
+  const FIELD_LABELS: Record<string, string> = {"max_teilnehmer": "Maximale Teilnehmerzahl", "gruppenname": "Gruppenname", "trainer": "Trainer", "wochentag": "Wochentag", "beginn": "Beginn (Uhrzeit)", "ende": "Ende (Uhrzeit)", "bemerkung": "Bemerkung"};
   const CURRENCY_KEYS = new Set<string>([]);
   // Applookup-Referenz-Labels: pro applookup-Feld in dieser Form (ownKey)
   // eine Map { lookupKey: label } für ALLE Felder des Target-Schemas. Wird

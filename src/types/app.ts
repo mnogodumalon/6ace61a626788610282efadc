@@ -59,6 +59,7 @@ export interface Trainingsgruppen {
   createdat: string;
   updatedat: string | null;
   fields: {
+    max_teilnehmer?: number;
     gruppenname?: string;
     trainer?: RecordUrl; // applookup -> URL zu 'Trainer' Record
     wochentag?: LookupValue;
@@ -135,6 +136,7 @@ export interface Turnieranmeldungen {
     teilnehmer_nachname?: string;
     teilnehmer_email?: string;
     telefon?: string;
+    leistungsklasse?: string;
   };
 }
 
@@ -174,7 +176,7 @@ export const LOOKUP_OPTIONS: Record<string, Record<string, {key: string, label: 
     wochentag: [{ key: "montag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "montag") ?? "Montag"; } }, { key: "dienstag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "dienstag") ?? "Dienstag"; } }, { key: "mittwoch", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "mittwoch") ?? "Mittwoch"; } }, { key: "donnerstag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "donnerstag") ?? "Donnerstag"; } }, { key: "freitag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "freitag") ?? "Freitag"; } }, { key: "samstag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "samstag") ?? "Samstag"; } }, { key: "sonntag", get label() { return lookupLabel('trainingsgruppen', 'wochentag', "sonntag") ?? "Sonntag"; } }],
   },
   'mitglieder': {
-    beitragsart: [{ key: "jugendlicher", get label() { return lookupLabel('mitglieder', 'beitragsart', "jugendlicher") ?? "Jugendlicher"; } }, { key: "familie", get label() { return lookupLabel('mitglieder', 'beitragsart', "familie") ?? "Familie"; } }, { key: "erwachsener", get label() { return lookupLabel('mitglieder', 'beitragsart', "erwachsener") ?? "Erwachsener"; } }],
+    beitragsart: [{ key: "erwachsener", get label() { return lookupLabel('mitglieder', 'beitragsart', "erwachsener") ?? "Erwachsener"; } }, { key: "jugendlicher", get label() { return lookupLabel('mitglieder', 'beitragsart', "jugendlicher") ?? "Jugendlicher"; } }, { key: "familie", get label() { return lookupLabel('mitglieder', 'beitragsart', "familie") ?? "Familie"; } }],
   },
   'turniere': {
     wettbewerb: [{ key: "herren_einzel", get label() { return lookupLabel('turniere', 'wettbewerb', "herren_einzel") ?? "Herren Einzel"; } }, { key: "damen_einzel", get label() { return lookupLabel('turniere', 'wettbewerb', "damen_einzel") ?? "Damen Einzel"; } }, { key: "herren_doppel", get label() { return lookupLabel('turniere', 'wettbewerb', "herren_doppel") ?? "Herren Doppel"; } }, { key: "damen_doppel", get label() { return lookupLabel('turniere', 'wettbewerb', "damen_doppel") ?? "Damen Doppel"; } }, { key: "mixed", get label() { return lookupLabel('turniere', 'wettbewerb', "mixed") ?? "Mixed"; } }, { key: "jugend", get label() { return lookupLabel('turniere', 'wettbewerb', "jugend") ?? "Jugend"; } }],
@@ -203,6 +205,7 @@ export const FIELD_TYPES: Record<string, Record<string, string>> = {
     'trainerlizenz': 'string/text',
   },
   'trainingsgruppen': {
+    'max_teilnehmer': 'number',
     'gruppenname': 'string/text',
     'trainer': 'applookup/select',
     'wochentag': 'lookup/select',
@@ -243,6 +246,7 @@ export const FIELD_TYPES: Record<string, Record<string, string>> = {
     'teilnehmer_nachname': 'string/text',
     'teilnehmer_email': 'string/email',
     'telefon': 'string/tel',
+    'leistungsklasse': 'string/text',
   },
   'platzbuchungen': {
     'mitglied': 'applookup/select',

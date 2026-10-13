@@ -18,6 +18,23 @@ const IntentPlatzBuchenPage = lazy(() => import('@/pages/intents/PlatzBuchenPage
 import { DashboardSkeleton } from '@/components/DashboardStates';
 const IntentMitgliedAufnehmenPage = lazy(() => import('@/pages/intents/MitgliedAufnehmenPage'));
 const IntentTrainingsgruppeAnlegenPage = lazy(() => import('@/pages/intents/TrainingsgruppeAnlegenPage'));
+
+// Lazy: public pages live outside <Layout> and only load on /#/public/:slug —
+// dashboard users never pay for them, anonymous visitors skip the dashboard.
+
+
+// Language switch = full remount below the router: every t()/label lookup
+// re-evaluates, the la-* widgets re-read <html lang>. Sits inside HashRouter
+// so the current route survives (it re-reads the URL hash).
+
+
+// The assistant (chat + Werkzeuge + code viewer) is platform chrome:
+// <la-klar-assistant>, loaded via /actions-agent/embed/embed.js (appended
+// dynamically in index.html). Own shadow DOM, own styling. Mounted OUTSIDE
+// LocaleGate on purpose — its keyed remounts (locale switch, catalog
+// arrival) must not tear the element down mid-chat; the element follows
+// <html lang> itself. Hidden on anonymous public routes; its 401 guard is
+// the backstop, not the mechanism.
 // </custom:imports>
 
 // Lazy: public pages live outside <Layout> and only load on /#/public/:slug —

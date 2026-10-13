@@ -37,6 +37,7 @@ export function TrainingsgruppenDetails({
   return (
     <>
       <RecordSection title={t('details')} cols={2}>
+        <RecordField label={fieldLabel('trainingsgruppen', 'max_teilnehmer')} value={record.fields.max_teilnehmer} format="text" />
         <RecordField label={fieldLabel('trainingsgruppen', 'gruppenname')} value={record.fields.gruppenname} format="text" />
         <RecordField label={fieldLabel('trainingsgruppen', 'wochentag')} value={record.fields.wochentag} format="pill" />
         <RecordField label={fieldLabel('trainingsgruppen', 'beginn')} value={record.fields.beginn} format="text" />

@@ -14,7 +14,7 @@
  * Facts from the metadata — candidates, NOT decisions:
  *   - trainer: no date pair, no references
  *   - trainingsgruppen: applookups trainer→trainer · lookups wochentag[montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag]
- *   - mitglieder: applookups trainingsgruppe→trainingsgruppen · lookups beitragsart[jugendlicher|familie|erwachsener]
+ *   - mitglieder: applookups trainingsgruppe→trainingsgruppen · lookups beitragsart[erwachsener|jugendlicher|familie]
  *   - turniere: no date pair, no references
  *   - turnieranmeldungen: applookups turnier→turniere
  *   - platzbuchungen: date pairs beginn+ende · applookups mitglied→mitglieder · lookups platz[platz_1|platz_2|platz_3|platz_4|platz_5|platz_6], platzart[halle|aussenplatz], buchungsart[freies_spiel|training|turnier]
