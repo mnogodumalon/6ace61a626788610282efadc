@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "language": "de",
+  "understanding": {
+    "summary": "Die Anwendung verwaltet den Tennisverein TC Grünweiß: Mitglieder mit Kontaktdaten und Beitragsart, Trainer und Trainingsgruppen mit Wochentag und Uhrzeiten, Platzbuchungen der Mitglieder (Halle oder Außenplatz) sowie Turniere mit öffentlicher Anmeldung. Ausschreibungen und Ergebnislisten werden als Dokumente an den Turnieren abgelegt.",
+    "roles": [
+      "Vereinsvorstand",
+      "Trainer",
+      "Mitglied",
+      "Turnierinteressent (Besucher)"
+    ],
+    "main_tasks": [
+      "Mitglieder pflegen und Trainingsgruppen zuordnen",
+      "Trainer und Trainingsgruppen mit Zeiten verwalten",
+      "Plätze buchen ohne Doppelbelegung",
+      "Turniere anlegen und Anmeldungen entgegennehmen",
+      "Ausschreibung und Ergebnislisten an Turnieren ablegen"
+    ],
+    "platform_roles": [
+      {
+        "persona": "Vereinsvorstand",
+        "role": "administrator",
+        "apps": [
+          "trainer",
+          "trainingsgruppen",
+          "mitglieder",
+          "turniere",
+          "turnieranmeldungen",
+          "platzbuchungen"
+        ]
+      },
+      {
+        "persona": "Trainer",
+        "role": "datenverarbeitung",
+        "apps": [
+          "trainingsgruppen",
+          "mitglieder",
+          "turnieranmeldungen",
+          "trainer"
+        ]
+      },
+      {
+        "persona": "Mitglied",
+        "role": "standard",
+        "apps": [
+          "platzbuchungen",
+          "turniere",
+          "mitglieder",
+          "trainingsgruppen",
+          "trainer"
+        ]
+      }
+    ]
+  },
+  "flows": [
+    {
+      "slug": "platz-buchen",
+      "label": {
+        "de": "Platz buchen",
+        "en": "Book a court"
+      },
+      "description": "Ein Mitglied bucht einen Platz für einen Zeitraum, ohne dass sich Buchungen überschneiden.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "platzbuchungen",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "mitglied": "picked",
+            "platz": "user",
+            "platzart": "user",
+            "beginn": "user",
+            "ende": "user",
+            "buchungsart": "user",
+            "bemerkung": "user"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `platz-buchen` — Platz buchen\nEin Mitglied bucht einen Platz für einen Zeitraum, ohne dass sich Buchungen überschneiden.\n\n## Your hook — import it, never rebuild what it owns\n`import { usePlatzBuchenFlow } from '@/lib/journey/flows/PlatzBuchen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: mitglied), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Mitglied auswählen\n2. Platz und Platzart wählen\n3. Beginn und Ende angeben\n4. Buchungsart und Bemerkung ergänzen\n5. Prüfung auf Doppelbelegung und speichern\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `platzbuchungen`:\n    - `mitglied`: from the record the user picks in this flow\n    - `platz`: the user enters it (bind it through the layer: form.field/…)\n    - `platzart`: the user enters it (bind it through the layer: form.field/…)\n    - `beginn`: the user enters it (bind it through the layer: form.field/…)\n    - `ende`: the user enters it (bind it through the layer: form.field/…)\n    - `buchungsart`: the user enters it (bind it through the layer: form.field/…)\n    - `bemerkung`: the user enters it (bind it through the layer: form.field/…)\n\n## Reads\n- `mitglieder` columns vorname, nachname, email\n- `platzbuchungen` columns platz, platzart, beginn, ende\n\n## Checks BEFORE the write (block the submit with the message when they fail)\n- no_overlap (from=`platzbuchungen.beginn`, to=`platzbuchungen.ende`, resource=`platzbuchungen.platz`) — message: „Dieser Platz ist im gewählten Zeitraum bereits gebucht.“\n\n## Success page\n- shows: `platzbuchungen.platz`, `platzbuchungen.beginn`, `platzbuchungen.ende`\n\n## Never write these — another flow or a tool owns them\n- `mitglieder.vorname` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.nachname` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.email` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.telefon` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.geburtsdatum` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.mitglied_seit` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.beitragsart` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.trainingsgruppe` (owner: intent `mitglied-aufnehmen`)\n- `trainingsgruppen.gruppenname` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.trainer` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.wochentag` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.beginn` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.ende` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.bemerkung` (owner: intent `trainingsgruppe-anlegen`)\n"
+    },
+    {
+      "slug": "mitglied-aufnehmen",
+      "label": {
+        "de": "Mitglied aufnehmen",
+        "en": "Add a member"
+      },
+      "description": "Ein neues Mitglied wird mit Kontaktdaten und Beitragsart erfasst und direkt einer Trainingsgruppe zugeordnet.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "mitglieder",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "vorname": "user",
+            "nachname": "user",
+            "email": "user",
+            "telefon": "user",
+            "geburtsdatum": "user",
+            "mitglied_seit": "derived:today",
+            "beitragsart": "user",
+            "trainingsgruppe": "picked"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `mitglied-aufnehmen` — Mitglied aufnehmen\nEin neues Mitglied wird mit Kontaktdaten und Beitragsart erfasst und direkt einer Trainingsgruppe zugeordnet.\n\n## Your hook — import it, never rebuild what it owns\n`import { useMitgliedAufnehmenFlow } from '@/lib/journey/flows/MitgliedAufnehmen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: trainingsgruppe), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Personendaten und Kontaktdaten eingeben\n2. Beitragsart wählen\n3. Trainingsgruppe aus der Liste mit Trainer und Zeiten auswählen\n4. Speichern\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `mitglieder`:\n    - `vorname`: the user enters it (bind it through the layer: form.field/…)\n    - `nachname`: the user enters it (bind it through the layer: form.field/…)\n    - `email`: the user enters it (bind it through the layer: form.field/…)\n    - `telefon`: the user enters it (bind it through the layer: form.field/…)\n    - `geburtsdatum`: the user enters it (bind it through the layer: form.field/…)\n    - `mitglied_seit`: derived: today() — set it in the plan step, never ask\n    - `beitragsart`: the user enters it (bind it through the layer: form.field/…)\n    - `trainingsgruppe`: from the record the user picks in this flow\n\n## Reads\n- `trainingsgruppen` columns gruppenname, trainer, wochentag, beginn, ende\n\n## Success page\n- shows: `mitglieder.nachname`, `mitglieder.trainingsgruppe`\n- next flows to offer: `platz-buchen`\n\n## Never write these — another flow or a tool owns them\n- `platzbuchungen.mitglied` (owner: intent `platz-buchen`)\n- `platzbuchungen.platz` (owner: intent `platz-buchen`)\n- `platzbuchungen.platzart` (owner: intent `platz-buchen`)\n- `platzbuchungen.beginn` (owner: intent `platz-buchen`)\n- `platzbuchungen.ende` (owner: intent `platz-buchen`)\n- `platzbuchungen.buchungsart` (owner: intent `platz-buchen`)\n- `platzbuchungen.bemerkung` (owner: intent `platz-buchen`)\n- `trainingsgruppen.gruppenname` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.trainer` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.wochentag` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.beginn` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.ende` (owner: intent `trainingsgruppe-anlegen`)\n- `trainingsgruppen.bemerkung` (owner: intent `trainingsgruppe-anlegen`)\n"
+    },
+    {
+      "slug": "trainingsgruppe-anlegen",
+      "label": {
+        "de": "Trainingsgruppe anlegen",
+        "en": "Create a training group"
+      },
+      "description": "Eine Trainingsgruppe wird mit Trainer, Wochentag und Uhrzeiten angelegt.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "trainingsgruppen",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "gruppenname": "user",
+            "trainer": "picked",
+            "wochentag": "user",
+            "beginn": "user",
+            "ende": "user",
+            "bemerkung": "user"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `trainingsgruppe-anlegen` — Trainingsgruppe anlegen\nEine Trainingsgruppe wird mit Trainer, Wochentag und Uhrzeiten angelegt.\n\n## Your hook — import it, never rebuild what it owns\n`import { useTrainingsgruppeAnlegenFlow } from '@/lib/journey/flows/TrainingsgruppeAnlegen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: trainer), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Gruppenname eingeben\n2. Trainer aus der Trainerliste wählen\n3. Wochentag, Beginn und Ende angeben\n4. Speichern\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `trainingsgruppen`:\n    - `gruppenname`: the user enters it (bind it through the layer: form.field/…)\n    - `trainer`: from the record the user picks in this flow\n    - `wochentag`: the user enters it (bind it through the layer: form.field/…)\n    - `beginn`: the user enters it (bind it through the layer: form.field/…)\n    - `ende`: the user enters it (bind it through the layer: form.field/…)\n    - `bemerkung`: the user enters it (bind it through the layer: form.field/…)\n\n## Reads\n- `trainer` columns vorname, nachname, trainerlizenz\n\n## Success page\n- shows: `trainingsgruppen.gruppenname`, `trainingsgruppen.trainer`\n- next flows to offer: `mitglied-aufnehmen`\n\n## Never write these — another flow or a tool owns them\n- `platzbuchungen.mitglied` (owner: intent `platz-buchen`)\n- `platzbuchungen.platz` (owner: intent `platz-buchen`)\n- `platzbuchungen.platzart` (owner: intent `platz-buchen`)\n- `platzbuchungen.beginn` (owner: intent `platz-buchen`)\n- `platzbuchungen.ende` (owner: intent `platz-buchen`)\n- `platzbuchungen.buchungsart` (owner: intent `platz-buchen`)\n- `platzbuchungen.bemerkung` (owner: intent `platz-buchen`)\n- `mitglieder.vorname` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.nachname` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.email` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.telefon` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.geburtsdatum` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.mitglied_seit` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.beitragsart` (owner: intent `mitglied-aufnehmen`)\n- `mitglieder.trainingsgruppe` (owner: intent `mitglied-aufnehmen`)\n"
+    }
+  ],
+  "public_pages": [
+    {
+      "slug": "turnier-anmeldung",
+      "purpose": "Besucher sehen die kommenden Turniere, deren Meldeschluss noch nicht abgelaufen ist, und melden sich öffentlich zu einem Turnier an. Die Anmeldung legt nur eine neue Turnieranmeldung an.",
+      "publish": true,
+      "lists": [
+        {
+          "entity": "turniere",
+          "columns": [
+            "turniername",
+            "turnierbeginn",
+            "turnierende",
+            "meldeschluss",
+            "wettbewerb",
+            "altersklasse",
+            "austragungsort",
+            "startgeld",
+            "beschreibung"
+          ],
+          "filter": {
+            "mode": "all",
+            "conditions": [
+              {
+                "field": "meldeschluss",
+                "op": "gte",
+                "value": {
+                  "rel": "today"
+                }
+              }
+            ]
+          },
+          "max_records": null
+        }
+      ],
+      "creates": [
+        {
+          "entity": "turnieranmeldungen",
+          "fields": {
+            "turnier": "picked",
+            "teilnehmer_vorname": "user",
+            "teilnehmer_nachname": "user",
+            "teilnehmer_email": "user",
+            "telefon": "user",
+            "teilnehmer_geburtsdatum": "user",
+            "vereinsmitglied": "user",
+            "verein": "user",
+            "wettbewerb_wunsch": "user",
+            "anmerkung": "user",
+            "einwilligung": "user"
+          },
+          "fixed": {}
+        }
+      ],
+      "brief": "# Public page `turnier-anmeldung`\nBesucher sehen die kommenden Turniere, deren Meldeschluss noch nicht abgelaufen ist, und melden sich öffentlich zu einem Turnier an. Die Anmeldung legt nur eine neue Turnieranmeldung an.\n\n## Lists (declare exactly these in the surface)\n- `turniere`: columns `turniername`, `turnierbeginn`, `turnierende`, `meldeschluss`, `wettbewerb`, `altersklasse`, `austragungsort`, `startgeld`, `beschreibung`, filter {\"mode\": \"all\", \"conditions\": [{\"field\": \"meldeschluss\", \"op\": \"gte\", \"value\": {\"rel\": \"today\"}}]}\n\n## Creates (declare exactly these in the surface)\n- `turnieranmeldungen`: visitor fields `turnier`, `teilnehmer_vorname`, `teilnehmer_nachname`, `teilnehmer_email`, `telefon`, `teilnehmer_geburtsdatum`, `vereinsmitglied`, `verein`, `wettbewerb_wunsch`, `anmerkung`, `einwilligung`\n\n## Availability — mechanical, write nothing for it\nA picker (`useRecordSearch`) never offers a record another record already takes (a booked slot) — the layer leaves it out. To SHOW booked periods, call `useOccupancy(port, '<entity>')` and hand `blocked` to AvailabilityRangePicker; the integration gives the page exactly that read (dates or the reference, never who booked). Never declare a list of bookings with names or contacts to work availability out yourself.\n\nPublish: yes\n"
+    }
+  ],
+  "tools": [],
+  "covered_by_platform": [
+    {
+      "wish": "Ausschreibung und Ergebnislisten als Dokumente an Turnieren ablegen",
+      "feature": "record_attachments"
+    },
+    {
+      "wish": "Mitgliederdaten wie bisher in der Excel-Liste führen",
+      "feature": "list_page"
+    },
+    {
+      "wish": "Mitglieder, Trainer und Anmeldungen suchen und filtern",
+      "feature": "search_filter"
+    },
+    {
+      "wish": "Mitgliederliste als Tabelle/Excel exportieren",
+      "feature": "csv_json_export"
+    },
+    {
+      "wish": "Mitglieder pro Trainingsgruppe oder Beitragsart zählen",
+      "feature": "distribution_view"
+    },
+    {
+      "wish": "Zugriff für Trainer, Mitglieder und Vorstand",
+      "feature": "user_roles"
+    }
+  ],
+  "ownership": {
+    "platzbuchungen": {
+      "mitglied": "intent:platz-buchen",
+      "platz": "intent:platz-buchen",
+      "platzart": "intent:platz-buchen",
+      "beginn": "intent:platz-buchen",
+      "ende": "intent:platz-buchen",
+      "buchungsart": "intent:platz-buchen",
+      "bemerkung": "intent:platz-buchen"
+    },
+    "mitglieder": {
+      "vorname": "intent:mitglied-aufnehmen",
+      "nachname": "intent:mitglied-aufnehmen",
+      "email": "intent:mitglied-aufnehmen",
+      "telefon": "intent:mitglied-aufnehmen",
+      "geburtsdatum": "intent:mitglied-aufnehmen",
+      "mitglied_seit": "intent:mitglied-aufnehmen",
+      "beitragsart": "intent:mitglied-aufnehmen",
+      "trainingsgruppe": "intent:mitglied-aufnehmen"
+    },
+    "trainingsgruppen": {
+      "gruppenname": "intent:trainingsgruppe-anlegen",
+      "trainer": "intent:trainingsgruppe-anlegen",
+      "wochentag": "intent:trainingsgruppe-anlegen",
+      "beginn": "intent:trainingsgruppe-anlegen",
+      "ende": "intent:trainingsgruppe-anlegen",
+      "bemerkung": "intent:trainingsgruppe-anlegen"
+    }
+  },
+  "dashboard": {
+    "focus": [
+      "Anstehende Turniere mit Meldeschluss",
+      "Neue Turnieranmeldungen",
+      "Heutige und kommende Platzbuchungen",
+      "Trainingsgruppen pro Wochentag"
+    ],
+    "hints": [
+      "Platzbuchungen zeigen Belegung je Platz und Zeitraum",
+      "Turnieranmeldungen nach Turnier gruppiert darstellen",
+      "Mitglieder nach Beitragsart zählen"
+    ],
+    "wishes": []
+  }
+}

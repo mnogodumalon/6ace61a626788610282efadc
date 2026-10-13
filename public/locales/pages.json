@@ -1,0 +1,33 @@
+{
+  "pages": {
+    "en": {
+      "+ Anmeldung": "+ Registration",
+      "Anmeldung erfassen": "Add Registration",
+      "Anmeldungen (7 Tage)": "Registrations (7 days)",
+      "Anstehende Turniere": "Upcoming Tournaments",
+      "Beitragsart": "Fee Type",
+      "Buchung": "Booking",
+      "Buchungen heute": "Bookings Today",
+      "Heute ist auf der Anlage noch nichts geplant.": "Nothing planned at the facility today.",
+      "Heute spielen {0}.": "{0} playing today.",
+      "Keine kommenden Buchungen.": "No upcoming bookings.",
+      "Keine offenen Turniere.": "No open tournaments.",
+      "Kommende Platzbuchungen": "Upcoming Court Bookings",
+      "Meldeschluss bei {0} rückt näher.": "Registration deadline for {0} is approaching.",
+      "Meldeschluss {0}": "Registration deadline {0}",
+      "Mitglieder nach Beitragsart": "Members by Fee Type",
+      "Neue Turnieranmeldungen": "New Tournament Registrations",
+      "Neues Turnier": "New Tournament",
+      "Noch keine Anmeldungen eingegangen.": "No registrations received yet.",
+      "Noch keine Trainingsgruppen angelegt.": "No training groups created yet.",
+      "Nächstes Turnier: {0}.": "Next tournament: {0}.",
+      "Training heute: {0}.": "Training today: {0}.",
+      "Trainingsgruppen pro Wochentag": "Training Groups per Weekday",
+      "Turnier anlegen": "Create Tournament",
+      "Turniere offen": "Open Tournaments",
+      "{0} Anmeldungen": "{0} registrations",
+      "— Meldeschluss am {0}, bisher {1} Anmeldungen.": "— Registration deadline on {0}, {1} registrations so far."
+    }
+  },
+  "v": 1
+}

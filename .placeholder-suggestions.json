@@ -1,0 +1,51 @@
+{
+  "TrainerDialog.tsx": {
+    "vorname": "z. B. Anna",
+    "nachname": "z. B. Müller",
+    "email": "z. B. anna.mueller@tc-gruenweiss.de",
+    "trainerlizenz": "z. B. C-Lizenz"
+  },
+  "TrainingsgruppenDialog.tsx": {
+    "gruppenname": "z. B. Jugend U14",
+    "trainer": "Welcher Trainer?",
+    "wochentag": "z. B. Montag, Mittwoch",
+    "beginn": "z. B. 17:00",
+    "ende": "z. B. 18:30",
+    "bemerkung": "Hinweise zur Gruppe"
+  },
+  "MitgliederDialog.tsx": {
+    "vorname": "z. B. Anna",
+    "nachname": "z. B. Müller",
+    "email": "z. B. anna@beispiel.de",
+    "geburtsdatum": "Wann wurde das Mitglied geboren?",
+    "mitglied_seit": "Seit wann im Verein?",
+    "trainingsgruppe": "Welche Trainingsgruppe?"
+  },
+  "TurniereDialog.tsx": {
+    "turniername": "z. B. Sommercup 2026",
+    "turnierbeginn": "Wann beginnt das Turnier?",
+    "turnierende": "Wann endet das Turnier?",
+    "meldeschluss": "Bis wann kann man melden?",
+    "altersklasse": "z. B. U18, Herren 40",
+    "austragungsort": "z. B. Anlage Grünweiß",
+    "startgeld": "z. B. 15",
+    "beschreibung": "Infos zum Turnier"
+  },
+  "TurnieranmeldungenDialog.tsx": {
+    "teilnehmer_geburtsdatum": "Wann wurdest du geboren?",
+    "verein": "z. B. TC Rot-Weiß Köln",
+    "wettbewerb_wunsch": "z. B. Herren 40 Einzel",
+    "anmerkung": "Wünsche oder Hinweise",
+    "turnier": "Welches Turnier?",
+    "teilnehmer_vorname": "z. B. Anna",
+    "teilnehmer_nachname": "z. B. Müller",
+    "teilnehmer_email": "z. B. anna@beispiel.de"
+  },
+  "PlatzbuchungenDialog.tsx": {
+    "mitglied": "Welches Mitglied?",
+    "platz": "z. B. Platz 1, Platz 2",
+    "beginn": "Wann beginnt die Buchung?",
+    "ende": "Wann endet die Buchung?",
+    "bemerkung": "Hinweise zur Buchung"
+  }
+}
