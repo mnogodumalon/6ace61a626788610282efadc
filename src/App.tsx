@@ -14,6 +14,10 @@ import { IntentPolicyLoader } from '@/components/IntentPolicyLoader';
 import IntentsAdmin from '@/pages/IntentsAdmin';
 import AppMap from '@/pages/AppMap';
 // <custom:imports>
+const IntentPlatzBuchenPage = lazy(() => import('@/pages/intents/PlatzBuchenPage'));
+import { DashboardSkeleton } from '@/components/DashboardStates';
+const IntentMitgliedAufnehmenPage = lazy(() => import('@/pages/intents/MitgliedAufnehmenPage'));
+const IntentTrainingsgruppeAnlegenPage = lazy(() => import('@/pages/intents/TrainingsgruppeAnlegenPage'));
 // </custom:imports>
 
 // Lazy: public pages live outside <Layout> and only load on /#/public/:slug —
@@ -85,6 +89,9 @@ export default function App() {
                 <Route path="verwaltung/oeffentliche-seiten" element={<PublicPagesAdmin />} />
                 <Route path="verwaltung/oeffentliche-seiten/:slug/felder" element={<PublicPageFields />} />
                 {/* <custom:routes> */}
+                <Route path="intents/platz-buchen" element={<Suspense fallback={<DashboardSkeleton />}><IntentPlatzBuchenPage /></Suspense>} />
+                <Route path="intents/mitglied-aufnehmen" element={<Suspense fallback={<DashboardSkeleton />}><IntentMitgliedAufnehmenPage /></Suspense>} />
+                <Route path="intents/trainingsgruppe-anlegen" element={<Suspense fallback={<DashboardSkeleton />}><IntentTrainingsgruppeAnlegenPage /></Suspense>} />
                 {/* </custom:routes> */}
                 {/* An unknown hash (a bookmark from before a rebuild renamed the
                     flows, a mistyped link) must not be a blank page. */}

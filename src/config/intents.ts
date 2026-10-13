@@ -20,6 +20,7 @@
 import type { ComponentType } from 'react';
 
 // <custom:intent-imports>
+import { IconCalendarPlus, IconUserPlus, IconUsersGroup } from '@tabler/icons-react';
 // </custom:intent-imports>
 
 export interface IntentLink {
@@ -42,6 +43,9 @@ export interface IntentLink {
 
 export const INTENTS: IntentLink[] = [
   // <custom:intents>
+  { path: '/intents/platz-buchen', label: { de: 'Platz buchen', en: 'Book a court' }, icon: IconCalendarPlus, description: 'Ein Mitglied bucht einen Platz für einen Zeitraum, ohne dass sich Buchungen überschneiden.' },
+  { path: '/intents/mitglied-aufnehmen', label: { de: 'Mitglied aufnehmen', en: 'Add a member' }, icon: IconUserPlus, description: 'Ein neues Mitglied wird mit Kontaktdaten und Beitragsart erfasst und direkt einer Trainingsgruppe zugeordnet.' },
+  { path: '/intents/trainingsgruppe-anlegen', label: { de: 'Trainingsgruppe anlegen', en: 'Create a training group' }, icon: IconUsersGroup, description: 'Eine Trainingsgruppe wird mit Trainer, Wochentag und Uhrzeiten angelegt.' },
   // </custom:intents>
 ];
 
@@ -52,7 +56,7 @@ export const INTENTS: IntentLink[] = [
  * purpose — a scaffold update resets it to false (self-healing if Phase 2
  * never ran).
  */
-export const INTENTS_PENDING = true;
+export const INTENTS_PENDING = false;
 
 /**
  * When the Phase-1 bundle was deployed (ISO, set by the service together with

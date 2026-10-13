@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "slug": "turnier-anmeldung",
+      "component": "TurnierAnmeldung",
+      "title": "Turnieranmeldung",
+      "endpoints": [
+        {
+          "entity": "turniere",
+          "op": "list",
+          "fields": [
+            "turniername",
+            "turnierbeginn",
+            "turnierende",
+            "meldeschluss",
+            "wettbewerb",
+            "altersklasse",
+            "austragungsort",
+            "startgeld",
+            "beschreibung"
+          ],
+          "scope": "r.v_meldeschluss >= today()",
+          "scope_description": "zeigt nur Turniere, deren Meldeschluss noch nicht abgelaufen ist",
+          "max_records": 200
+        },
+        {
+          "entity": "turnieranmeldungen",
+          "op": "create",
+          "fields": [
+            "turnier",
+            "teilnehmer_vorname",
+            "teilnehmer_nachname",
+            "teilnehmer_email",
+            "telefon",
+            "teilnehmer_geburtsdatum",
+            "vereinsmitglied",
+            "verein",
+            "wettbewerb_wunsch",
+            "anmerkung",
+            "einwilligung"
+          ]
+        }
+      ]
+    }
+  ]
+}

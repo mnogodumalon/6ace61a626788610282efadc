@@ -39,6 +39,12 @@ export type MessageFieldKey<E extends EntityKey> = E extends keyof MessageFields
 
 export const REQUIRED_MESSAGES: { [E in EntityKey]?: Partial<Record<MessageFieldKey<E>, string>> } = {
   // <custom:messages>
+  trainer: { vorname: "Bitte den Vornamen eingeben.", nachname: "Bitte den Nachnamen eingeben." },
+  trainingsgruppen: { gruppenname: "Bitte einen Gruppennamen eingeben.", trainer: "Bitte einen Trainer auswählen.", wochentag: "Bitte den Wochentag wählen.", beginn: "Bitte die Beginnzeit eingeben.", ende: "Bitte die Endzeit eingeben." },
+  mitglieder: { vorname: "Bitte den Vornamen eingeben.", nachname: "Bitte den Nachnamen eingeben.", email: "Bitte die E-Mail-Adresse eingeben.", geburtsdatum: "Bitte das Geburtsdatum wählen.", mitglied_seit: "Bitte das Eintrittsdatum wählen.", beitragsart: "Bitte eine Beitragsart wählen." },
+  turniere: { turniername: "Bitte den Turniernamen eingeben.", turnierbeginn: "Bitte den Turnierbeginn wählen.", meldeschluss: "Bitte den Meldeschluss wählen." },
+  turnieranmeldungen: { einwilligung: "Bitte der Datenverarbeitung zustimmen.", teilnehmer_geburtsdatum: "Bitte das Geburtsdatum wählen.", wettbewerb_wunsch: "Bitte Wettbewerb und Altersklasse angeben.", turnier: "Bitte ein Turnier auswählen.", teilnehmer_vorname: "Bitte den Vornamen eingeben.", teilnehmer_nachname: "Bitte den Nachnamen eingeben.", teilnehmer_email: "Bitte die E-Mail-Adresse eingeben." },
+  platzbuchungen: { mitglied: "Bitte ein Mitglied auswählen.", platz: "Bitte einen Platz wählen.", platzart: "Bitte Halle oder Außenplatz wählen.", beginn: "Bitte den Beginn wählen.", ende: "Bitte das Ende wählen." },
   // </custom:messages>
 };
 
